@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<rect width="1200" height="800" fill="#5427A8"/>
+<rect x="330" y="160" width="420" height="420" rx="210" fill="#FF6E91"/><rect x="620" y="190" width="360" height="360" fill="none" stroke="#FF6E91" stroke-width="4"/><circle cx="700" cy="200" r="40" fill="#F1EBDD"/>
+<text x="600.0" y="764" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="31" letter-spacing="4" fill="#F1EBDD" opacity="0.75">SAMPLE WORKSHOP IMAGE</text>
+</svg>

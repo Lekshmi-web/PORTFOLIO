@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000">
+<rect width="800" height="1000" fill="#D9C9F5"/>
+<circle cx="400" cy="380" r="150" fill="#5427A8"/><path d="M140 1000 C140 700 660 700 660 1000 Z" fill="#5427A8"/><circle cx="640" cy="170" r="70" fill="#D8F16B"/><rect x="80" y="120" width="90" height="90" rx="12" fill="#FF6E91" transform="rotate(-12 125 165)"/>
+<text x="400.0" y="964" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="21" letter-spacing="4" fill="#211B2B" opacity="0.75">SAMPLE PORTRAIT · REPLACE IN ADMIN</text>
+</svg>

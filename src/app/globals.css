@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* ───────── Brand tokens ───────── */
+@theme {
+  --color-canvas: #f1ebdd;   /* Aged Canvas  */
+  --color-ink: #211b2b;      /* Plum Ink     */
+  --color-violet: #5427a8;   /* Royal Violet */
+  --color-lavender: #d9c9f5; /* Mist Lavender*/
+  --color-pink: #ff6e91;     /* Artist Pink  */
+  --color-lime: #d8f16b;     /* Acid Lime    */
+  --color-coral: #e76b45;    /* Burnt Coral  */
+
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-grotesk: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  Contrast rules (WCAG, measured):
+  ✓ text: ink/violet on canvas · ink/violet on lavender · canvas/lime/pink/coral/lavender on ink · canvas/lime on violet
+  ✗ text: pink, coral, lime, lavender on canvas · violet on ink
+*/
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-canvas text-ink font-sans antialiased;
+    font-feature-settings: "ss01";
+  }
+  ::selection {
+    @apply bg-lime text-ink;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-violet);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  .bg-ink :focus-visible,
+  .bg-violet :focus-visible {
+    outline-color: var(--color-lime);
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12;
+  }
+  .eyebrow {
+    @apply font-grotesk text-xs font-medium uppercase tracking-[0.18em];
+  }
+  .display {
+    @apply font-display font-medium leading-[0.98] tracking-[-0.02em];
+  }
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.4s var(--ease-soft);
+  }
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1.5px;
+  }
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  }
+  /* Admin form controls */
+  .field {
+    @apply w-full rounded-lg border border-ink/20 bg-white px-3 py-2 text-sm text-ink placeholder:text-ink/40 focus:border-violet focus:outline-none;
+  }
+  .label {
+    @apply mb-1 block font-grotesk text-xs font-medium uppercase tracking-wider text-ink/70;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

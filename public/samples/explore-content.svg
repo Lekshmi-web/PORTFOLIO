@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+<rect width="1200" height="900" fill="#FF6E91"/>
+<rect x="330" y="200" width="540" height="340" rx="28" fill="#211B2B"/><path d="M560 300 L680 370 L560 440 Z" fill="#D8F16B"/><rect x="330" y="580" width="300" height="20" rx="10" fill="#211B2B"/>
+<text x="600.0" y="864" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="31" letter-spacing="4" fill="#211B2B" opacity="0.75">CONTENT CREATOR</text>
+</svg>

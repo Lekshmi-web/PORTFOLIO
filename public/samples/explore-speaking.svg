@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
+<rect width="1200" height="900" fill="#E76B45"/>
+<rect x="540" y="180" width="120" height="240" rx="60" fill="#211B2B"/><path d="M480 380 a120 120 0 0 0 240 0" fill="none" stroke="#211B2B" stroke-width="18"/><rect x="590" y="500" width="20" height="120" fill="#211B2B"/><circle cx="300" cy="250" r="50" fill="#D8F16B"/><circle cx="920" cy="560" r="80" fill="#F1EBDD"/>
+<text x="600.0" y="864" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="31" letter-spacing="4" fill="#211B2B" opacity="0.75">SPEAKING &amp; EVENTS</text>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800">
+<rect width="1200" height="800" fill="#D9C9F5"/>
+<rect x="240" y="160" width="420" height="420" rx="210" fill="#5427A8"/><rect x="620" y="220" width="360" height="360" fill="none" stroke="#5427A8" stroke-width="4"/><circle cx="820" cy="200" r="40" fill="#211B2B"/>
+<text x="600.0" y="764" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="31" letter-spacing="4" fill="#211B2B" opacity="0.75">SAMPLE PROJECT IMAGE</text>
+</svg>

@@ -1,0 +1,31 @@
+"use client";
+
+import { motion, useReducedMotion } from "framer-motion";
+
+interface RevealProps {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+  as?: "div" | "li" | "section";
+}
+
+/** Fades content up as it scrolls into view. Disabled for reduced-motion users. */
+export function Reveal({ children, delay = 0, className, as = "div" }: RevealProps) {
+  const reduce = useReducedMotion();
+  const Tag = motion[as];
+  if (reduce) {
+    const Plain = as;
+    return <Plain className={className}>{children}</Plain>;
+  }
+  return (
+    <Tag
+      className={className}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.8, delay, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </Tag>
+  );
+}
