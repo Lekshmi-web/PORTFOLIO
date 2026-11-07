@@ -27,37 +27,41 @@ export default async function ProjectPage({ params }: Params) {
   if (!p) notFound();
 
   const sections = [
-    { label: "The problem", text: p.problem },
-    { label: "What I built", text: p.role },
-    { label: "Outcome", text: p.outcome },
+    { label: "the_problem", text: p.problem },
+    { label: "what_i_built", text: p.role },
+    { label: "outcome", text: p.outcome },
   ].filter((s) => s.text);
 
   return (
-    <article className="pb-24 pt-32 md:pb-32 md:pt-40">
+    <article className="relative isolate pb-24 pt-28 md:pt-36">
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[600px]">
+        <div className="bg-grid absolute inset-0" />
+        <div className="glow-violet absolute -left-40 -top-40 size-[600px]" />
+      </div>
       <div className="container-x">
-        <Link href="/projects" className="inline-flex items-center gap-2 font-grotesk text-sm text-ink/70 hover:text-violet">
-          <ArrowLeft className="size-4" aria-hidden /> All projects
+        <Link href="/projects" className="inline-flex items-center gap-2 font-mono text-xs text-canvas/65 hover:text-lime">
+          <ArrowLeft className="size-4" aria-hidden /> cd ../projects
         </Link>
 
-        <Reveal className="mt-10 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
+        <Reveal className="mt-8 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end">
           <div>
-            <p className="eyebrow mb-5 flex items-center gap-3 text-violet">
-              Project <SampleTag show={p.is_sample} />
+            <p className="mono-label mb-4 flex items-center gap-3 text-lime">
+              // project <SampleTag show={p.is_sample} />
             </p>
-            <h1 className="display text-5xl sm:text-6xl lg:text-7xl">{p.title}</h1>
-            {p.summary && <p className="mt-6 max-w-2xl text-xl text-ink/75">{p.summary}</p>}
+            <h1 className="heading text-4xl sm:text-5xl lg:text-6xl">{p.title}</h1>
+            {p.summary && <p className="mt-5 max-w-2xl text-lg text-canvas/70">{p.summary}</p>}
           </div>
-          <dl className="grid gap-6 border-t border-ink/20 pt-6 font-grotesk text-sm">
+          <div className="glass space-y-5 p-6">
             {p.tech.length > 0 && (
               <div>
-                <dt className="eyebrow text-ink/60">Stack</dt>
-                <dd className="mt-2 flex flex-wrap gap-2">
+                <p className="mono-label text-canvas/60">stack</p>
+                <ul className="mt-3 flex flex-wrap gap-1.5">
                   {p.tech.map((t) => (
-                    <span key={t} className="rounded-full bg-ink px-3 py-1 text-xs text-canvas">
+                    <li key={t} className="chip">
                       {t}
-                    </span>
+                    </li>
                   ))}
-                </dd>
+                </ul>
               </div>
             )}
             <div className="flex flex-wrap gap-3">
@@ -72,23 +76,23 @@ export default async function ProjectPage({ params }: Params) {
                 </ButtonLink>
               )}
             </div>
-          </dl>
+          </div>
         </Reveal>
 
         {p.image_url && (
-          <Reveal className="relative mt-16 aspect-[16/9] overflow-hidden rounded-[2rem] bg-lavender">
+          <Reveal className="relative mt-12 aspect-[16/9] overflow-hidden rounded-3xl border border-white/10 bg-night">
             <SmartImage src={p.image_url} alt={`${p.title} preview`} fill priority sizes="100vw" className="object-cover" />
           </Reveal>
         )}
 
         {sections.length > 0 && (
-          <div className="mx-auto mt-20 max-w-3xl space-y-14">
+          <div className="mx-auto mt-16 max-w-3xl space-y-10">
             {sections.map((s, i) => (
               <Reveal key={s.label}>
-                <p className="eyebrow mb-4 text-violet">
-                  {String(i + 1).padStart(2, "0")} — {s.label}
+                <p className="mono-label mb-3 text-lime">
+                  {String(i + 1).padStart(2, "0")} · {s.label}
                 </p>
-                <p className="whitespace-pre-line text-xl leading-relaxed text-ink/85">{s.text}</p>
+                <p className="whitespace-pre-line text-lg leading-relaxed text-canvas/85">{s.text}</p>
               </Reveal>
             ))}
           </div>

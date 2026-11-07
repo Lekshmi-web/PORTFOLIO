@@ -5,12 +5,10 @@ import { getSettings } from "@/lib/data";
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSettings();
   return (
-    <>
+    <div className="site min-h-screen">
       <Navbar name={settings.full_name} />
-      <main id="main" className="grain">
-        {children}
-      </main>
+      <main id="main">{children}</main>
       <Footer settings={settings} />
-    </>
+    </div>
   );
 }

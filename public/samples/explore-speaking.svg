@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900">
-<rect width="1200" height="900" fill="#E76B45"/>
-<rect x="540" y="180" width="120" height="240" rx="60" fill="#211B2B"/><path d="M480 380 a120 120 0 0 0 240 0" fill="none" stroke="#211B2B" stroke-width="18"/><rect x="590" y="500" width="20" height="120" fill="#211B2B"/><circle cx="300" cy="250" r="50" fill="#D8F16B"/><circle cx="920" cy="560" r="80" fill="#F1EBDD"/>
-<text x="600.0" y="864" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="31" letter-spacing="4" fill="#211B2B" opacity="0.75">SPEAKING &amp; EVENTS</text>
+<defs>
+<radialGradient id="g1" cx="30%" cy="30%" r="60%"><stop offset="0" stop-color="#5427A8" stop-opacity=".75"/><stop offset="1" stop-color="#0E0B14" stop-opacity="0"/></radialGradient>
+<radialGradient id="g2" cx="80%" cy="80%" r="50%"><stop offset="0" stop-color="#FF6E91" stop-opacity=".35"/><stop offset="1" stop-color="#0E0B14" stop-opacity="0"/></radialGradient>
+<pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#F1EBDD" stroke-opacity=".06"/></pattern>
+</defs>
+<rect width="1200" height="900" fill="#0E0B14"/><rect width="1200" height="900" fill="url(#grid)"/>
+<rect width="1200" height="900" fill="url(#g1)"/><rect width="1200" height="900" fill="url(#g2)"/>
+<circle cx="600" cy="430" r="70" fill="none" stroke="#E76B45" stroke-opacity="0.6" stroke-width="2"/><circle cx="600" cy="430" r="140" fill="none" stroke="#D9C9F5" stroke-opacity="0.5" stroke-width="2"/><circle cx="600" cy="430" r="210" fill="none" stroke="#E76B45" stroke-opacity="0.4" stroke-width="2"/><circle cx="600" cy="430" r="280" fill="none" stroke="#D9C9F5" stroke-opacity="0.3" stroke-width="2"/><circle cx="600" cy="430" r="350" fill="none" stroke="#E76B45" stroke-opacity="0.2" stroke-width="2"/><rect x="570" y="360" width="60" height="120" rx="30" fill="#D8F16B"/>
+<text x="32" y="868" font-family="ui-monospace, Menlo, monospace" font-size="24" letter-spacing="3" fill="#D8F16B" opacity=".9">// SPEAKING &amp; EVENTS</text>
 </svg>

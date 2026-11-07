@@ -8,15 +8,15 @@ export function WorkshopsStrip({ workshops }: { workshops: Workshop[] }) {
   if (!workshops.length) return null;
 
   return (
-    <section className="bg-ink py-20 text-canvas md:py-32" aria-label="Workshops">
-      <div className="container-x">
+    <section className="relative overflow-hidden border-y border-white/10 bg-night py-20 md:py-28" aria-label="Workshops">
+      <div aria-hidden className="glow-violet absolute -left-40 top-0 size-[600px] opacity-70" />
+      <div className="container-x relative">
         <SectionHeading
-          tone="dark"
           number="03"
-          label="Teaching & mentoring"
+          label="teaching & mentoring"
           title={
             <>
-              Learning by <span className="italic text-lime">building</span>
+              Learning by <span className="accent-serif text-lime">building</span>
             </>
           }
           href="/workshops"
@@ -25,34 +25,41 @@ export function WorkshopsStrip({ workshops }: { workshops: Workshop[] }) {
       </div>
 
       <ul
-        className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-5 pb-6 sm:px-8 lg:px-[max(3rem,calc((100vw-1320px)/2+3rem))]"
+        className="relative flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:thin] sm:px-8 lg:px-[max(2.5rem,calc((100vw-1240px)/2+2.5rem))]"
         aria-label="Workshop list — scroll sideways for more"
       >
         {workshops.map((w, i) => (
-          <li key={w.id} className="w-[82vw] max-w-[420px] shrink-0 snap-start">
-            <Link href={`/workshops/${w.slug}`} className="group block">
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-violet">
+          <li key={w.id} className="w-[80vw] max-w-[380px] shrink-0 snap-start">
+            <Link href={`/workshops/${w.slug}`} className="group glass glass-hover block overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden bg-void">
                 {w.image_url && (
                   <SmartImage
                     src={w.image_url}
                     alt=""
                     fill
-                    sizes="420px"
+                    sizes="380px"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 )}
-                <span className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1 font-grotesk text-xs font-medium text-ink">
-                  {w.format ?? `Workshop ${String(i + 1).padStart(2, "0")}`}
+                <span className="absolute left-4 top-4 rounded-full bg-lime px-3 py-1 font-mono text-[11px] font-medium text-void">
+                  {w.format ?? `workshop_${String(i + 1).padStart(2, "0")}`}
                 </span>
               </div>
-              <div className="mt-5 flex items-center gap-3">
-                <h3 className="font-display text-2xl group-hover:text-lime md:text-3xl">{w.title}</h3>
-                <SampleTag show={w.is_sample} />
+              <div className="p-5">
+                <h3 className="heading flex flex-wrap items-center gap-2 text-xl group-hover:text-lime">
+                  {w.title} <SampleTag show={w.is_sample} />
+                </h3>
+                {w.audience && <p className="mt-1.5 text-sm text-canvas/65">For {w.audience}</p>}
+                {w.topics.length > 0 && (
+                  <ul className="mt-4 flex flex-wrap gap-1.5">
+                    {w.topics.map((t) => (
+                      <li key={t} className="chip">
+                        {t}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              {w.audience && <p className="mt-2 font-grotesk text-sm text-canvas/70">For {w.audience}</p>}
-              {w.topics.length > 0 && (
-                <p className="mt-3 text-sm text-lavender">{w.topics.join(" · ")}</p>
-              )}
             </Link>
           </li>
         ))}

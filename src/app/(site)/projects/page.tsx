@@ -19,56 +19,60 @@ export default async function ProjectsPage() {
   return (
     <>
       <PageHeader
-        label="01 — AI & Engineering"
+        label="01 — ai & engineering"
         title={
           <>
-            Projects &amp; <span className="italic text-violet">experiments</span>
+            Projects &amp; <span className="accent-serif gradient-text">experiments</span>
           </>
         }
         intro="AI projects, machine learning, LLMs, automation, and practical engineering solutions."
       />
-      <section className="container-x pb-24 md:pb-32">
+      <section className="container-x pb-24">
         {projects.length === 0 ? (
           <EmptyState text="Projects are on their way." />
         ) : (
-          <ul className="grid gap-x-10 gap-y-20 md:grid-cols-12">
-            {projects.map((p, i) => {
-              // Alternate wide and narrow tiles for an editorial rhythm.
-              const span = i % 3 === 0 ? "md:col-span-12 lg:col-span-7" : i % 3 === 1 ? "md:col-span-6 lg:col-span-5 lg:mt-32" : "md:col-span-6 lg:col-span-6 lg:col-start-4";
-              return (
-                <Reveal as="li" key={p.id} className={span}>
-                  <Link href={`/projects/${p.slug}`} className="group block">
-                    <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-lavender">
-                      {p.image_url && (
-                        <SmartImage
-                          src={p.image_url}
-                          alt={`${p.title} preview`}
-                          fill
-                          sizes="(min-width: 1024px) 50vw, 100vw"
-                          className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-                        />
-                      )}
-                    </div>
-                    <div className="mt-6 flex items-start justify-between gap-6">
-                      <div>
-                        <p className="eyebrow mb-2 flex items-center gap-3 text-ink/60">
-                          {String(i + 1).padStart(2, "0")}
-                          <SampleTag show={p.is_sample} />
-                        </p>
-                        <h2 className="display text-3xl group-hover:text-violet md:text-4xl">{p.title}</h2>
-                        {p.summary && <p className="mt-3 max-w-lg text-ink/75">{p.summary}</p>}
-                        {p.tech.length > 0 && (
-                          <p className="mt-4 font-grotesk text-sm text-violet">{p.tech.join(" · ")}</p>
-                        )}
-                      </div>
-                      <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full border border-ink/30 transition-colors group-hover:border-violet group-hover:bg-violet group-hover:text-canvas">
-                        <ArrowUpRight className="size-5" aria-hidden />
+          <ul className="grid gap-4 md:grid-cols-2">
+            {projects.map((p, i) => (
+              <Reveal as="li" key={p.id} delay={(i % 2) * 0.08} className={i === 0 ? "md:col-span-2" : ""}>
+                <Link
+                  href={`/projects/${p.slug}`}
+                  className={`group glass grid h-full overflow-hidden transition-all duration-500 hover:border-lime/40 hover:shadow-[0_0_60px_-24px_rgba(216,241,107,0.5)] ${
+                    i === 0 ? "md:grid-cols-[1.3fr_1fr]" : ""
+                  }`}
+                >
+                  <div className={`relative overflow-hidden bg-night ${i === 0 ? "aspect-[16/10] md:aspect-auto md:min-h-[360px]" : "aspect-[16/10]"}`}>
+                    {p.image_url && (
+                      <SmartImage
+                        src={p.image_url}
+                        alt={`${p.title} preview`}
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                      />
+                    )}
+                  </div>
+                  <div className="flex flex-col p-6 md:p-8">
+                    <div className="flex items-center justify-between">
+                      <span className="flex items-center gap-2 font-mono text-xs text-canvas/60">
+                        {String(i + 1).padStart(2, "0")} <SampleTag show={p.is_sample} />
                       </span>
+                      <ArrowUpRight aria-hidden className="size-5 text-canvas/50 transition-all group-hover:rotate-45 group-hover:text-lime" />
                     </div>
-                  </Link>
-                </Reveal>
-              );
-            })}
+                    <h2 className={`heading mt-6 group-hover:text-lime ${i === 0 ? "text-3xl md:text-4xl" : "text-2xl"}`}>{p.title}</h2>
+                    {p.summary && <p className="mt-3 text-canvas/70">{p.summary}</p>}
+                    {p.tech.length > 0 && (
+                      <ul className="mt-auto flex flex-wrap gap-1.5 pt-6">
+                        {p.tech.map((t) => (
+                          <li key={t} className="chip">
+                            {t}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
           </ul>
         )}
       </section>

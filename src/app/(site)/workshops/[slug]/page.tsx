@@ -23,33 +23,37 @@ export default async function WorkshopPage({ params }: Params) {
   if (!w) notFound();
 
   const facts = [
-    { label: "Format", value: w.format },
-    { label: "Audience", value: w.audience },
-    { label: "Date", value: formatDate(w.event_date, true) },
-    { label: "Location", value: w.location },
+    { label: "format", value: w.format },
+    { label: "audience", value: w.audience },
+    { label: "date", value: formatDate(w.event_date, true) },
+    { label: "location", value: w.location },
   ].filter((f) => f.value);
 
   return (
-    <article className="pb-24 pt-32 md:pb-32 md:pt-40">
+    <article className="relative isolate pb-24 pt-28 md:pt-36">
+      <div aria-hidden className="absolute inset-x-0 top-0 -z-10 h-[600px]">
+        <div className="bg-grid absolute inset-0" />
+        <div className="glow-pink absolute -right-40 -top-40 size-[600px]" />
+      </div>
       <div className="container-x">
-        <Link href="/workshops" className="inline-flex items-center gap-2 font-grotesk text-sm text-ink/70 hover:text-violet">
-          <ArrowLeft className="size-4" aria-hidden /> All workshops
+        <Link href="/workshops" className="inline-flex items-center gap-2 font-mono text-xs text-canvas/65 hover:text-lime">
+          <ArrowLeft className="size-4" aria-hidden /> cd ../workshops
         </Link>
 
-        <div className="mt-10 grid gap-12 lg:grid-cols-[1fr_420px]">
+        <div className="mt-8 grid items-start gap-10 lg:grid-cols-[1fr_380px]">
           <Reveal>
-            <p className="eyebrow mb-5 flex items-center gap-3 text-violet">
-              Workshop <SampleTag show={w.is_sample} />
+            <p className="mono-label mb-4 flex items-center gap-3 text-lime">
+              // workshop <SampleTag show={w.is_sample} />
             </p>
-            <h1 className="display text-5xl sm:text-6xl lg:text-7xl">{w.title}</h1>
-            {w.summary && <p className="mt-6 text-xl text-ink/75">{w.summary}</p>}
-            {w.details && <p className="mt-10 whitespace-pre-line text-lg leading-relaxed text-ink/85">{w.details}</p>}
+            <h1 className="heading text-4xl sm:text-5xl lg:text-6xl">{w.title}</h1>
+            {w.summary && <p className="mt-5 text-lg text-canvas/70">{w.summary}</p>}
+            {w.details && <p className="mt-8 whitespace-pre-line leading-relaxed text-canvas/85">{w.details}</p>}
             {w.topics.length > 0 && (
-              <div className="mt-10">
-                <p className="eyebrow mb-4 text-ink/60">Topics covered</p>
-                <ul className="flex flex-wrap gap-2">
+              <div className="mt-8">
+                <p className="mono-label mb-3 text-canvas/60">topics covered</p>
+                <ul className="flex flex-wrap gap-1.5">
                   {w.topics.map((t) => (
-                    <li key={t} className="rounded-full bg-lavender px-4 py-1.5 font-grotesk text-sm">
+                    <li key={t} className="chip">
                       {t}
                     </li>
                   ))}
@@ -58,34 +62,32 @@ export default async function WorkshopPage({ params }: Params) {
             )}
           </Reveal>
 
-          <Reveal delay={0.1}>
-            <div className="sticky top-28 space-y-6">
-              {w.image_url && (
-                <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] bg-violet">
-                  <SmartImage src={w.image_url} alt="" fill sizes="420px" className="object-cover" />
-                </div>
-              )}
-              {facts.length > 0 && (
-                <dl className="divide-y divide-canvas/15 rounded-[2rem] bg-ink p-6 text-canvas">
-                  {facts.map((f) => (
-                    <div key={f.label} className="flex justify-between gap-4 py-3 font-grotesk text-sm">
-                      <dt className="text-canvas/60">{f.label}</dt>
-                      <dd className="text-right">{f.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              {w.register_url ? (
-                <ButtonLink href={w.register_url} external>
-                  Register
-                </ButtonLink>
-              ) : (
-                <ButtonLink href="/contact" variant="outline">
-                  Book this workshop
-                </ButtonLink>
-              )}
-            </div>
-          </Reveal>
+          <aside className="space-y-4 lg:sticky lg:top-24">
+            {w.image_url && (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-night">
+                <SmartImage src={w.image_url} alt="" fill sizes="380px" className="object-cover" />
+              </div>
+            )}
+            {facts.length > 0 && (
+              <dl className="glass divide-y divide-white/10 px-5">
+                {facts.map((f) => (
+                  <div key={f.label} className="flex justify-between gap-4 py-3 text-sm">
+                    <dt className="font-mono text-xs uppercase tracking-widest text-canvas/60">{f.label}</dt>
+                    <dd className="text-right">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {w.register_url ? (
+              <ButtonLink href={w.register_url} external>
+                Register
+              </ButtonLink>
+            ) : (
+              <ButtonLink href="/contact" variant="outline">
+                Book this workshop
+              </ButtonLink>
+            )}
+          </aside>
         </div>
       </div>
     </article>

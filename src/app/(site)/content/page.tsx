@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Play } from "lucide-react";
 import { EmptyState } from "@/components/site/EmptyState";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 };
 
 const platformColour: Record<string, string> = {
-  YouTube: "bg-coral text-ink",
-  Article: "bg-lime text-ink",
-  LinkedIn: "bg-lavender text-ink",
-  Instagram: "bg-pink text-ink",
+  YouTube: "text-coral",
+  Article: "text-lime",
+  LinkedIn: "text-lavender",
+  Instagram: "text-pink",
 };
 
 export default async function ContentPage() {
@@ -26,49 +26,55 @@ export default async function ContentPage() {
   return (
     <>
       <PageHeader
-        label="04 — Content Creator"
-        accent="coral"
+        label="04 — content creator"
+        accent="pink"
         title={
           <>
-            Content &amp; <span className="italic text-violet">tutorials</span>
+            Content &amp; <span className="accent-serif gradient-text">tutorials</span>
           </>
         }
         intro="Educational content, useful AI tools, tutorials, and learning resources."
       />
-      <section className="container-x pb-24 md:pb-32">
+      <section className="container-x pb-24">
         {items.length === 0 ? (
           <EmptyState text="Fresh content is on the way." />
         ) : (
-          <ul className="grid gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {items.map((c, i) => (
-              <Reveal as="li" key={c.id} delay={(i % 3) * 0.06} className={i % 3 === 1 ? "lg:mt-16" : ""}>
+              <Reveal as="li" key={c.id} delay={(i % 3) * 0.06}>
                 <a
                   href={c.url ?? "#"}
                   target={c.url ? "_blank" : undefined}
                   rel="noopener noreferrer"
-                  className="group block"
+                  className="group glass glass-hover block h-full overflow-hidden"
                 >
-                  <div className="relative aspect-video overflow-hidden rounded-[1.5rem] bg-ink">
+                  <div className="relative aspect-video overflow-hidden bg-night">
                     {c.image_url ? (
-                      <SmartImage src={c.image_url} alt="" fill sizes="(min-width: 1024px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <SmartImage
+                        src={c.image_url}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 33vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
                     ) : (
-                      <span aria-hidden className="absolute inset-0 flex items-center justify-center font-display text-6xl italic text-lavender">
-                        {c.platform}
-                      </span>
+                      <div aria-hidden className="absolute inset-0 bg-grid" />
                     )}
-                  </div>
-                  <div className="mt-5 flex flex-wrap items-center gap-3 font-grotesk text-xs">
-                    <span className={`rounded-full px-3 py-1 ${platformColour[c.platform] ?? "bg-lavender text-ink"}`}>
-                      {c.platform}
+                    <span aria-hidden className="absolute inset-0 grid place-items-center">
+                      <span className="grid size-14 place-items-center rounded-full border border-white/20 bg-void/50 backdrop-blur transition-all duration-300 group-hover:scale-110 group-hover:border-lime group-hover:bg-lime group-hover:text-void">
+                        {c.platform === "YouTube" ? <Play className="size-5" /> : <ArrowUpRight className="size-5" />}
+                      </span>
                     </span>
-                    {c.published_on && <span className="text-ink/60">{formatDate(c.published_on, true)}</span>}
-                    <SampleTag show={c.is_sample} />
                   </div>
-                  <h2 className="mt-3 flex items-start justify-between gap-4 font-display text-2xl leading-snug group-hover:text-violet">
-                    {c.title}
-                    <ArrowUpRight aria-hidden className="mt-1 size-5 shrink-0" />
-                  </h2>
-                  {c.summary && <p className="mt-2 text-ink/70">{c.summary}</p>}
+                  <div className="p-5">
+                    <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest">
+                      <span className={platformColour[c.platform] ?? "text-lavender"}>● {c.platform}</span>
+                      {c.published_on && <span className="text-canvas/60">{formatDate(c.published_on, true)}</span>}
+                      <SampleTag show={c.is_sample} />
+                    </div>
+                    <h2 className="heading mt-3 text-lg leading-snug group-hover:text-lime">{c.title}</h2>
+                    {c.summary && <p className="mt-2 text-sm text-canvas/65">{c.summary}</p>}
+                  </div>
                 </a>
               </Reveal>
             ))}

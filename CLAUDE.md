@@ -21,12 +21,18 @@ Supabase (Postgres + Auth + Storage via `@supabase/ssr`) · framer-motion · luc
 - Never invent projects, metrics, events, testimonials or links. Placeholders must be marked `is_sample`.
 - Use Lekshmi's real photos; no stock or AI-generated faces.
 
-## Design rules
-- Palette tokens: canvas #F1EBDD, ink #211B2B, violet #5427A8, lavender #D9C9F5, pink #FF6E91, lime #D8F16B, coral #E76B45.
-- Fonts: Playfair Display (`font-display`), Space Grotesk (`font-grotesk`), DM Sans (`font-sans`).
-- Contrast: pink/coral/lime/lavender are NOT text colours on canvas; violet is not a text colour on ink.
-- Editorial, image-led, generous whitespace. Avoid repeated identical card grids.
-- Respect `prefers-reduced-motion`. Mobile-first; check 375 / 768 / 1280px.
+## Design rules — "Neural Studio" (dark)
+- Public site is dark (wrapper class `.site`); admin stays light.
+- Surfaces: void #0E0B14 (page), night #161120 (panels), ink #211B2B (raised). Text: canvas #F1EBDD.
+- Accents: lime #D8F16B (signal: CTAs, live dots, labels), lavender #D9C9F5 (accent text), pink #FF6E91, coral #E76B45,
+  violet #5427A8 (glows, gradients, borders, button backgrounds ONLY — never text on dark, it's 2:1).
+- Muted text no lower than `text-canvas/60`.
+- Type: headings `.heading` (Space Grotesk), italic accents `.accent-serif` (Playfair), labels `.mono-label` (JetBrains Mono),
+  body DM Sans. Keep sizes moderate: section h2 max `lg:text-5xl`, page h1 max `lg:text-6xl`.
+- Building blocks in globals.css: `.glass`, `.glass-hover`, `.chip`, `.gradient-text`, `.bg-grid`, `.glow-violet`, `.glow-pink`.
+- Effects live in `src/components/site/fx/` (NeuralBackground, DecodeText, TypingRoles). Every effect must respect
+  `prefers-reduced-motion` and pause when off-screen.
+- Mobile-first; check 375 / 768 / 1280px.
 
 ## Workflow
 - Plan first for anything non-trivial; wait for "go".

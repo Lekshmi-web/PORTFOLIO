@@ -14,11 +14,11 @@ export default async function TestimonialsPage() {
   return (
     <>
       <PageHeader
-        label="Kind words"
+        label="kind words"
         accent="pink"
         title={
           <>
-            From students &amp; <span className="italic text-violet">collaborators</span>
+            From students &amp; <span className="accent-serif gradient-text">collaborators</span>
           </>
         }
       />

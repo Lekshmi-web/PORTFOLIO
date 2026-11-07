@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { EmptyState } from "@/components/site/EmptyState";
 import { PageHeader } from "@/components/site/PageHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -19,57 +20,44 @@ export default async function WorkshopsPage() {
   return (
     <>
       <PageHeader
-        label="02 — Teaching & Mentoring"
+        label="02 — teaching & mentoring"
         accent="pink"
         title={
           <>
-            Workshops &amp; <span className="italic text-violet">mentoring</span>
+            Workshops &amp; <span className="accent-serif gradient-text">mentoring</span>
           </>
         }
         intro="Workshops, technical training, student mentoring, and knowledge sharing."
       />
-      <section className="container-x pb-24 md:pb-32">
+      <section className="container-x pb-24">
         {workshops.length === 0 ? (
           <EmptyState text="New workshops coming soon." />
         ) : (
-          <ul className="space-y-6">
+          <ul className="space-y-4">
             {workshops.map((w, i) => (
-              <Reveal as="li" key={w.id}>
+              <Reveal as="li" key={w.id} delay={0.05}>
                 <Link
                   href={`/workshops/${w.slug}`}
-                  className={`group grid items-center gap-8 rounded-[2rem] p-5 transition-colors md:grid-cols-[320px_1fr] md:p-6 ${
-                    i % 2 === 0 ? "bg-ink text-canvas" : "bg-lavender text-ink"
-                  }`}
+                  className="group glass grid items-center gap-6 p-4 transition-all duration-500 hover:border-lime/40 md:grid-cols-[300px_1fr_auto] md:p-5"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-violet">
+                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl bg-night">
                     {w.image_url && (
-                      <SmartImage src={w.image_url} alt="" fill sizes="320px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                      <SmartImage src={w.image_url} alt="" fill sizes="300px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                     )}
                   </div>
-                  <div className="md:pr-6">
-                    <div className="mb-3 flex flex-wrap items-center gap-3 font-grotesk text-xs uppercase tracking-widest">
-                      {w.format && <span className={i % 2 === 0 ? "text-lime" : "text-violet"}>{w.format}</span>}
-                      {w.event_date && <span className="opacity-75">{formatDate(w.event_date, true)}</span>}
-                      {w.location && <span className="opacity-75">{w.location}</span>}
+                  <div>
+                    <div className="mb-3 flex flex-wrap items-center gap-2 font-mono text-[11px] uppercase tracking-widest">
+                      <span className="text-lime">{String(i + 1).padStart(2, "0")}</span>
+                      {w.format && <span className="chip">{w.format}</span>}
+                      {w.event_date && <span className="text-canvas/60">{formatDate(w.event_date, true)}</span>}
+                      {w.location && <span className="text-canvas/60">{w.location}</span>}
                       <SampleTag show={w.is_sample} />
                     </div>
-                    <h2 className="display text-3xl md:text-5xl">{w.title}</h2>
-                    {w.summary && <p className="mt-3 max-w-2xl opacity-80">{w.summary}</p>}
-                    {w.topics.length > 0 && (
-                      <ul className="mt-5 flex flex-wrap gap-2">
-                        {w.topics.map((t) => (
-                          <li
-                            key={t}
-                            className={`rounded-full px-3 py-1 font-grotesk text-xs ${
-                              i % 2 === 0 ? "bg-canvas/10 text-canvas" : "bg-canvas text-ink"
-                            }`}
-                          >
-                            {t}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <h2 className="heading text-2xl group-hover:text-lime md:text-3xl">{w.title}</h2>
+                    {w.summary && <p className="mt-2 max-w-2xl text-canvas/70">{w.summary}</p>}
+                    {w.topics.length > 0 && <p className="mt-3 font-mono text-xs text-lavender">{w.topics.join(" · ")}</p>}
                   </div>
+                  <ArrowUpRight aria-hidden className="hidden size-6 text-canvas/50 transition-all group-hover:rotate-45 group-hover:text-lime md:mr-4 md:block" />
                 </Link>
               </Reveal>
             ))}

@@ -4,28 +4,23 @@ interface PageHeaderProps {
   label: string;
   title: React.ReactNode;
   intro?: string | null;
-  accent?: "lime" | "pink" | "coral" | "lavender";
+  accent?: "violet" | "pink";
 }
 
-const accents = {
-  lime: "bg-lime",
-  pink: "bg-pink",
-  coral: "bg-coral",
-  lavender: "bg-lavender",
-};
-
-export function PageHeader({ label, title, intro, accent = "lime" }: PageHeaderProps) {
+export function PageHeader({ label, title, intro, accent = "violet" }: PageHeaderProps) {
   return (
-    <header className="container-x relative pb-16 pt-36 md:pb-24 md:pt-48">
-      <span
-        aria-hidden
-        className={`absolute right-6 top-28 size-24 rounded-full md:right-16 md:top-36 md:size-40 ${accents[accent]}`}
-      />
-      <Reveal className="relative max-w-4xl">
-        <p className="eyebrow mb-6 text-violet">{label}</p>
-        <h1 className="display text-5xl sm:text-6xl lg:text-8xl">{title}</h1>
-        {intro && <p className="mt-8 max-w-2xl text-lg leading-relaxed text-ink/75">{intro}</p>}
-      </Reveal>
+    <header className="relative isolate overflow-hidden">
+      <div aria-hidden className="absolute inset-0 -z-10">
+        <div className="bg-grid absolute inset-0" />
+        <div className={`${accent === "pink" ? "glow-pink" : "glow-violet"} absolute -right-40 -top-40 size-[560px]`} />
+      </div>
+      <div className="container-x pb-12 pt-32 md:pb-16 md:pt-40">
+        <Reveal className="max-w-3xl">
+          <p className="mono-label mb-5 text-lime">// {label}</p>
+          <h1 className="heading text-4xl sm:text-5xl lg:text-6xl">{title}</h1>
+          {intro && <p className="mt-6 max-w-2xl text-base leading-relaxed text-canvas/70 md:text-lg">{intro}</p>}
+        </Reveal>
+      </div>
     </header>
   );
 }

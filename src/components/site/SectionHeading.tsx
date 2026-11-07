@@ -5,38 +5,24 @@ interface SectionHeadingProps {
   number: string;
   label: string;
   title: React.ReactNode;
+  intro?: string;
   href?: string;
   linkText?: string;
-  tone?: "light" | "dark";
 }
 
-export function SectionHeading({
-  number,
-  label,
-  title,
-  href,
-  linkText = "View all",
-  tone = "light",
-}: SectionHeadingProps) {
-  const muted = tone === "dark" ? "text-canvas/70" : "text-ink/60";
+export function SectionHeading({ number, label, title, intro, href, linkText = "View all" }: SectionHeadingProps) {
   return (
-    <div className="mb-12 flex flex-col gap-6 md:mb-16 md:flex-row md:items-end md:justify-between">
-      <div className="max-w-3xl">
-        <p className={`eyebrow mb-5 flex items-center gap-3 ${muted}`}>
-          <span className={tone === "dark" ? "text-lime" : "text-violet"}>{number}</span>
-          <span aria-hidden className="h-px w-10 bg-current" />
-          {label}
+    <div className="mb-10 flex flex-col gap-5 md:mb-14 md:flex-row md:items-end md:justify-between">
+      <div className="max-w-2xl">
+        <p className="mono-label mb-4 text-lime">
+          // {number} — {label}
         </p>
-        <h2 className="display text-4xl sm:text-5xl lg:text-6xl">{title}</h2>
+        <h2 className="heading text-3xl sm:text-4xl lg:text-5xl">{title}</h2>
+        {intro && <p className="mt-4 max-w-xl text-canvas/65">{intro}</p>}
       </div>
       {href && (
-        <Link
-          href={href}
-          className={`group inline-flex items-center gap-2 font-grotesk text-sm font-medium ${
-            tone === "dark" ? "text-lime" : "text-violet"
-          }`}
-        >
-          <span className="link-underline">{linkText}</span>
+        <Link href={href} className="group inline-flex shrink-0 items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-lavender hover:text-lime">
+          {linkText}
           <ArrowUpRight
             aria-hidden
             className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"

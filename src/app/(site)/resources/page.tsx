@@ -18,46 +18,42 @@ export default async function ResourcesPage() {
   return (
     <>
       <PageHeader
-        label="Learning materials"
-        accent="lavender"
+        label="learning materials"
         title={
           <>
-            Resources, <span className="italic text-violet">free to use</span>
+            Resources, <span className="accent-serif gradient-text">free to use</span>
           </>
         }
         intro="Notes, tools, guides and datasets I've put together to help you learn and build."
       />
-      <section className="container-x pb-24 md:pb-32">
+      <section className="container-x pb-24">
         {resources.length === 0 ? (
           <EmptyState text="Resources are being prepared." />
         ) : (
-          <div className="space-y-20">
-            {kinds.map((kind, k) => (
-              <div key={kind} className="grid gap-8 md:grid-cols-[220px_1fr]">
-                <h2 className="eyebrow flex items-baseline gap-3 text-ink/70 md:pt-7">
-                  <span className="text-violet">{String(k + 1).padStart(2, "0")}</span>
-                  {kind}
-                </h2>
-                <ul className="border-t border-ink/20">
+          <div className="space-y-14">
+            {kinds.map((kind) => (
+              <div key={kind}>
+                <h2 className="mono-label mb-4 text-lime">$ ls ./{kind.toLowerCase().replace(/\s+/g, "-")}</h2>
+                <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {resources
                     .filter((r) => r.kind === kind)
-                    .map((r) => (
-                      <Reveal as="li" key={r.id} className="border-b border-ink/20">
+                    .map((r, i) => (
+                      <Reveal as="li" key={r.id} delay={(i % 3) * 0.06}>
                         <a
                           href={r.url ?? "#"}
                           target={r.url ? "_blank" : undefined}
                           rel="noopener noreferrer"
                           aria-disabled={!r.url}
-                          className="group flex items-start justify-between gap-6 py-7"
+                          className="group glass glass-hover flex h-full flex-col p-6"
                         >
-                          <span>
-                            <span className="flex items-center gap-3">
-                              <span className="font-display text-3xl group-hover:text-violet">{r.title}</span>
-                              <SampleTag show={r.is_sample} />
-                            </span>
-                            {r.description && <span className="mt-2 block max-w-2xl text-ink/70">{r.description}</span>}
+                          <span className="flex items-center justify-between">
+                            <span className="chip">{r.kind}</span>
+                            <ArrowUpRight aria-hidden className="size-5 text-canvas/50 transition-all group-hover:rotate-45 group-hover:text-lime" />
                           </span>
-                          <ArrowUpRight aria-hidden className="mt-2 size-6 shrink-0 text-ink/40 group-hover:text-violet" />
+                          <span className="heading mt-6 flex flex-wrap items-center gap-2 text-xl group-hover:text-lime">
+                            {r.title} <SampleTag show={r.is_sample} />
+                          </span>
+                          {r.description && <span className="mt-2 text-sm text-canvas/65">{r.description}</span>}
                         </a>
                       </Reveal>
                     ))}

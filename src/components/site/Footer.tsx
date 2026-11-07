@@ -4,7 +4,7 @@ import { SocialLinks } from "./SocialLinks";
 
 const groups = [
   {
-    title: "Explore",
+    title: "explore",
     links: [
       { href: "/projects", label: "Projects" },
       { href: "/workshops", label: "Workshops" },
@@ -13,7 +13,7 @@ const groups = [
     ],
   },
   {
-    title: "About",
+    title: "about",
     links: [
       { href: "/about", label: "My story" },
       { href: "/achievements", label: "Achievements" },
@@ -26,21 +26,22 @@ const groups = [
 export function Footer({ settings }: { settings: SiteSettings }) {
   const year = new Date().getFullYear();
   return (
-    <footer className="bg-ink text-canvas">
-      <div className="container-x grid gap-14 py-20 md:grid-cols-[1.4fr_1fr_1fr]">
+    <footer className="relative overflow-hidden border-t border-white/10">
+      <div aria-hidden className="glow-violet absolute -bottom-60 left-1/2 size-[700px] -translate-x-1/2 opacity-60" />
+      <div className="container-x relative grid gap-12 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
         <div>
-          <p className="display text-3xl sm:text-4xl">
+          <p className="heading max-w-md text-2xl sm:text-3xl">
             {settings.core_message ?? "I build AI. I teach technology. I inspire people to create."}
           </p>
-          <SocialLinks settings={settings} className="mt-8 text-canvas" />
+          <SocialLinks settings={settings} className="mt-7 text-canvas" />
         </div>
         {groups.map((g) => (
           <nav key={g.title} aria-label={g.title}>
-            <p className="eyebrow mb-5 text-lime">{g.title}</p>
-            <ul className="space-y-3">
+            <p className="mono-label mb-4 text-lime">// {g.title}</p>
+            <ul className="space-y-2.5">
               {g.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="link-underline text-canvas/80 hover:text-canvas">
+                  <Link href={l.href} className="link-underline text-sm text-canvas/70 hover:text-canvas">
                     {l.label}
                   </Link>
                 </li>
@@ -49,9 +50,9 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </nav>
         ))}
       </div>
-      <div className="container-x flex flex-col gap-2 border-t border-canvas/15 py-6 font-grotesk text-xs text-canvas/60 sm:flex-row sm:justify-between">
+      <div className="container-x relative flex flex-col gap-2 border-t border-white/10 py-6 font-mono text-[11px] text-canvas/60 sm:flex-row sm:justify-between">
         <p>
-          © {year} {settings.full_name}. All rights reserved.
+          © {year} {settings.full_name}
         </p>
         <p>{settings.roles.slice(0, 4).join(" · ")}</p>
       </div>

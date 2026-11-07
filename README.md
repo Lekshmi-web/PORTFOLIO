@@ -117,11 +117,12 @@ supabase/
 public/samples/        placeholder images (palette-coloured SVGs)
 ```
 
-### Design system
-Colours are Tailwind tokens: `canvas` `ink` `violet` `lavender` `pink` `lime` `coral`
-(e.g. `bg-violet text-canvas`). Fonts: `font-display` (Playfair Display), `font-grotesk` (Space Grotesk), `font-sans` (DM Sans).
+### Design system — "Neural Studio"
+Dark public site, light admin. Colour tokens: `void` `night` `ink` (surfaces), `canvas` (text), `lime` `lavender` `pink` `coral` `violet` (accents).
+Fonts: `heading` (Space Grotesk), `accent-serif` (Playfair Display italic), `font-mono` (JetBrains Mono), body DM Sans.
+Animated pieces are in `src/components/site/fx/` and switch off for visitors who prefer reduced motion.
 
-**Contrast rule:** never put pink, coral, lime or lavender **text** on the canvas background — use them for shapes and highlights. See `src/app/globals.css`.
+**Contrast rule:** violet is never a text colour on the dark background — use it for glows, gradients and buttons. Use lavender or lime for accent text.
 
 ### Security notes
 - Content tables are protected by Row Level Security: anyone can read published content; only users in the `admins` table can write.
