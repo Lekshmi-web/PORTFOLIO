@@ -28,7 +28,7 @@ create policy "admins can read admins" on public.admins
 
 -- ── Shared trigger for updated_at ───────────────────────────
 create or replace function public.touch_updated_at()
-returns trigger language plpgsql as $$
+returns trigger language plpgsql set search_path = '' as $$
 begin
   new.updated_at = now();
   return new;
