@@ -1,6 +1,18 @@
 import type { CollectionKey } from "@/lib/types";
 
-export type FieldType = "text" | "textarea" | "url" | "number" | "date" | "boolean" | "tags" | "image" | "select" | "slug";
+export type FieldType =
+  | "text"
+  | "textarea"
+  | "url"
+  | "number"
+  | "date"
+  | "boolean"
+  | "tags"
+  | "lines"
+  | "image"
+  | "gallery"
+  | "select"
+  | "slug";
 
 export interface Field {
   name: string;
@@ -62,6 +74,7 @@ export const collections: Record<CollectionKey, CollectionConfig> = {
       { name: "outcome", label: "Outcome / impact", type: "textarea" },
       { name: "tech", label: "Tech stack", type: "tags", help: "Comma separated, e.g. Python, LangChain, Next.js" },
       { name: "image_url", label: "Cover image", type: "image" },
+      { name: "gallery", label: "Gallery", type: "gallery", help: "Extra screenshots shown on the project page. Needs migration 0002." },
       { name: "live_url", label: "Live link", type: "url" },
       { name: "repo_url", label: "GitHub link", type: "url" },
       ...display,
@@ -84,6 +97,7 @@ export const collections: Record<CollectionKey, CollectionConfig> = {
       { name: "format", label: "Format", type: "select", options: ["Hands-on", "Bootcamp", "Talk", "Webinar", "Mentoring", "Training"] },
       { name: "topics", label: "Topics", type: "tags", help: "Comma separated" },
       { name: "image_url", label: "Photo", type: "image" },
+      { name: "gallery", label: "Photo gallery", type: "gallery", help: "Photos from the session. Needs migration 0002." },
       { name: "register_url", label: "Registration link", type: "url" },
       ...display,
     ],

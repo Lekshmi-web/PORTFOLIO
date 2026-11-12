@@ -30,8 +30,13 @@ Supabase (Postgres + Auth + Storage via `@supabase/ssr`) · framer-motion · luc
 - Type: headings `.heading` (Space Grotesk), italic accents `.accent-serif` (Playfair), labels `.mono-label` (JetBrains Mono),
   body DM Sans. Keep sizes moderate: section h2 max `lg:text-5xl`, page h1 max `lg:text-6xl`.
 - Building blocks in globals.css: `.glass`, `.glass-hover`, `.chip`, `.gradient-text`, `.bg-grid`, `.glow-violet`, `.glow-pink`.
-- Effects live in `src/components/site/fx/` (NeuralBackground, DecodeText, TypingRoles). Every effect must respect
-  `prefers-reduced-motion` and pause when off-screen.
+- Effects live in `src/components/site/fx/`: NeuralBackground, DecodeText, TypingRoles, BootIntro, CustomCursor,
+  SpotlightTracker (+ `.spotlight` class), SmoothScroll (Lenis; pause with `lenis:stop` / `lenis:start` window events),
+  ScrollProgress, Magnetic, TiltCard, Counter, TimelineTrack, ScrollWords, ScrambleText, TerminalTyping, Gallery,
+  VideoModal, Countdown, CopyButton, confetti. Every effect must respect `prefers-reduced-motion`
+  (framer-motion follows it via MotionProvider) and pause when off-screen.
+- Cursor labels: add `data-cursor="view"` (or any short word) to an element.
+- Never put a `position: fixed` modal inside an element with transform/filter/backdrop-filter (e.g. `.glass`).
 - Mobile-first; check 375 / 768 / 1280px.
 
 ## Workflow

@@ -3,6 +3,7 @@ import { formatDate } from "@/lib/format";
 import { Reveal } from "../Reveal";
 import { SampleTag } from "../SampleTag";
 import { SectionHeading } from "../SectionHeading";
+import { TimelineTrack } from "../fx/TimelineTrack";
 
 export function Journey({ achievements }: { achievements: Achievement[] }) {
   if (!achievements.length) return null;
@@ -22,14 +23,13 @@ export function Journey({ achievements }: { achievements: Achievement[] }) {
           linkText="Full journey"
         />
 
-        <ol className="relative ml-2 border-l border-white/15 md:ml-[180px]">
-          {/* Glowing progress line */}
-          <span aria-hidden className="absolute -left-px top-0 h-24 w-px bg-linear-to-b from-lime to-transparent" />
+        <TimelineTrack className="ml-2 md:ml-[180px]">
+        <ol className="relative z-[1] border-l border-white/15">
           {achievements.map((a, i) => (
             <Reveal as="li" key={a.id} delay={i * 0.08} className="relative pb-10 pl-8 last:pb-0 md:pl-10">
               <span
                 aria-hidden
-                className={`absolute -left-[7px] top-1.5 size-3.5 rounded-full border-2 ${
+                className={`absolute -left-[7px] top-1.5 z-[2] size-3.5 rounded-full border-2 ${
                   i === 0 ? "border-lime bg-lime animate-pulse-dot" : "border-lavender/60 bg-void"
                 }`}
               />
@@ -37,7 +37,7 @@ export function Journey({ achievements }: { achievements: Achievement[] }) {
                 {a.kind}
                 {a.happened_on && <span className="block text-canvas/60">{formatDate(a.happened_on)}</span>}
               </p>
-              <div className="glass glass-hover p-5 md:p-6">
+              <div className="spotlight glass glass-hover p-5 md:p-6">
                 <div className="flex flex-wrap items-center gap-2">
                   <h3 className="heading text-xl md:text-2xl">{a.title}</h3>
                   <SampleTag show={a.is_sample} />
@@ -48,6 +48,7 @@ export function Journey({ achievements }: { achievements: Achievement[] }) {
             </Reveal>
           ))}
         </ol>
+        </TimelineTrack>
       </div>
     </section>
   );

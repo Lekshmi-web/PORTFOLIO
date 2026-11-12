@@ -49,6 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${playfair.variable} ${spaceGrotesk.variable} ${dmSans.variable} ${jetbrains.variable}`}
     >
       <body>{children}</body>

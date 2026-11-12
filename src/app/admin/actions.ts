@@ -33,6 +33,22 @@ function parseFields(fields: Field[], formData: FormData): { values: Record<stri
           .map((t) => t.trim())
           .filter(Boolean);
         break;
+      case "lines":
+        values[f.name] = str
+          .split(/\r?\n/)
+          .map((t) => t.trim())
+          .filter(Boolean);
+        break;
+      case "gallery": {
+        const urls = formData
+          .getAll(f.name)
+          .map((v) => (typeof v === "string" ? v.trim() : ""))
+          .filter(Boolean);
+        const badUrl = urls.find((u) => !u.startsWith("/") && !/^https:\/\//i.test(u));
+        if (badUrl) return { values, error: `${f.label}: every image must be an upload or an https:// link.` };
+        values[f.name] = urls;
+        break;
+      }
       case "slug": {
         const source = f.from ? String(formData.get(f.from) ?? "") : "";
         values[f.name] = slugify(str || source);
@@ -61,6 +77,15 @@ function parseFields(fields: Field[], formData: FormData): { values: Record<stri
   return { values };
 }
 
+/** Turns raw database errors into something actionable. */
+function friendlyDbError(message: string): string {
+  if (message.includes("duplicate key")) return "That URL slug is already used — choose another.";
+  if (/column .* does not exist|Could not find the '.*' column/i.test(message)) {
+    return "Your database is missing new fields. In Supabase → SQL Editor, run supabase/migrations/0002_engagement.sql, then save again.";
+  }
+  return message;
+}
+
 function refreshSite() {
   revalidatePath("/", "layout");
 }
@@ -84,12 +109,7 @@ export async function saveItem(
     ? await supabase.from(config.key).update(values).eq("id", id)
     : await supabase.from(config.key).insert(values);
 
-  if (result.error) {
-    const msg = result.error.message.includes("duplicate key")
-      ? "That URL slug is already used — choose another."
-      : result.error.message;
-    return { error: msg };
-  }
+  if (result.error) return { error: friendlyDbError(result.error.message) };
   refreshSite();
   redirect(`/admin/${config.key}?saved=1`);
 }
@@ -120,7 +140,7 @@ export async function saveSettings(_prev: FormState, formData: FormData): Promis
   const { values, error } = parseFields(settingsFields, formData);
   if (error) return { error };
   const { error: dbError } = await supabase.from("site_settings").upsert({ id: 1, ...values });
-  if (dbError) return { error: dbError.message };
+  if (dbError) return { error: friendlyDbError(dbError.message) };
   refreshSite();
   return { ok: true };
 }

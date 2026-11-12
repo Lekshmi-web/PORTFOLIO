@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 
 const links = [
   { href: "/projects", label: "Work" },
@@ -28,10 +28,13 @@ export function Navbar({ name }: { name: string }) {
   }, []);
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    window.dispatchEvent(new Event(open ? "lenis:stop" : "lenis:start"));
     return () => {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const openPalette = () => window.dispatchEvent(new Event("open-palette"));
 
   const [first, ...rest] = name.split(" ");
 
@@ -76,6 +79,17 @@ export function Navbar({ name }: { name: string }) {
             );
           })}
           <li className="ml-2">
+            <button
+              type="button"
+              onClick={openPalette}
+              className="flex items-center gap-2 rounded-full border border-white/12 px-3 py-1.5 font-mono text-[11px] text-canvas/70 transition-colors hover:border-lime/50 hover:text-canvas"
+              aria-label="Search the site (Ctrl+K)"
+            >
+              <Search className="size-3.5" aria-hidden />
+              ctrl k
+            </button>
+          </li>
+          <li className="ml-2">
             <Link
               href="/contact"
               className="rounded-full bg-lime px-4 py-2 font-grotesk text-sm font-medium text-void transition-shadow duration-300 hover:shadow-[0_0_24px_-4px_rgba(216,241,107,0.6)]"
@@ -85,6 +99,15 @@ export function Navbar({ name }: { name: string }) {
           </li>
         </ul>
 
+        <div className="flex items-center gap-2 lg:hidden">
+        <button
+          type="button"
+          onClick={openPalette}
+          aria-label="Search the site"
+          className="relative z-50 inline-flex size-10 items-center justify-center rounded-full border border-white/15 text-canvas"
+        >
+          <Search className="size-4" aria-hidden />
+        </button>
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -95,6 +118,7 @@ export function Navbar({ name }: { name: string }) {
         >
           {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
         </button>
+        </div>
       </nav>
 
       <div

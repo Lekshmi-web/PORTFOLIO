@@ -15,6 +15,9 @@ export interface SiteSettings {
   instagram_url: string | null;
   resume_url: string | null;
   skills: string[];
+  /** Counter lines like "25+ Workshops run". Empty = counters hidden. */
+  stats: string[];
+  status_text: string | null;
 }
 
 interface Base {
@@ -44,6 +47,7 @@ export interface Project extends Base {
   image_url: string | null;
   live_url: string | null;
   repo_url: string | null;
+  gallery: string[];
   featured: boolean;
 }
 
@@ -59,6 +63,7 @@ export interface Workshop extends Base {
   topics: string[];
   image_url: string | null;
   register_url: string | null;
+  gallery: string[];
   featured: boolean;
 }
 

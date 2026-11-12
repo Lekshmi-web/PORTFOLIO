@@ -21,6 +21,13 @@ export const settingsGroups: SettingsGroup[] = [
       { name: "hero_headline", label: "Headline", type: "text", help: "Each sentence gets its own line and style." },
       { name: "hero_intro", label: "Introduction", type: "textarea" },
       { name: "core_message", label: "Core message", type: "text", help: "Shown in the footer and About page." },
+      { name: "status_text", label: "Live status", type: "text", help: "Shown in the hero badge, e.g. “running a GenAI workshop this week”. Leave empty to hide. Needs migration 0002." },
+      {
+        name: "stats",
+        label: "Counters",
+        type: "lines",
+        help: "One per line: number first, then label — e.g. “25+ Workshops run”. Real numbers only. Leave empty to hide. Needs migration 0002.",
+      },
     ],
   },
   {

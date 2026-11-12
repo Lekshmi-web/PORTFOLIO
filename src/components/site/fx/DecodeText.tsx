@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { bootDelay, prefersReducedMotion } from "./motion";
 
 const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<>/{}[]#$%&*+=_";
 
@@ -22,7 +23,8 @@ export function DecodeText({ text, delay = 0, duration = 1100, className = "" }:
   const [output, setOutput] = useState<string | null>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (prefersReducedMotion()) return;
+    const startDelay = delay + bootDelay();
     let raf = 0;
     let startTime = 0;
     const chars = Array.from(text);
@@ -31,7 +33,7 @@ export function DecodeText({ text, delay = 0, duration = 1100, className = "" }:
 
     const tick = (now: number) => {
       if (!startTime) startTime = now;
-      const progress = (now - startTime - delay) / duration;
+      const progress = (now - startTime - startDelay) / duration;
       if (progress < 0) {
         setOutput(chars.map((c) => (c === " " ? " " : GLYPHS[(Math.random() * GLYPHS.length) | 0])).join(""));
         raf = requestAnimationFrame(tick);

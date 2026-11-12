@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Magnetic } from "./fx/Magnetic";
 
 type Variant = "primary" | "outline" | "violet";
 
@@ -19,23 +20,24 @@ interface ButtonLinkProps {
 }
 
 export function ButtonLink({ href, children, variant = "primary", arrow = true, external }: ButtonLinkProps) {
-  const className = `group inline-flex items-center gap-2 rounded-full px-5 py-3 font-grotesk text-sm font-medium transition-all duration-300 ${styles[variant]}`;
+  const className = `group inline-flex items-center gap-2 rounded-full px-5 py-3 font-grotesk text-sm font-medium transition-[box-shadow,border-color,color] duration-300 ${styles[variant]}`;
   const inner = (
     <>
       {children}
       {arrow && <ArrowRight aria-hidden className="size-4 transition-transform duration-300 group-hover:translate-x-1" />}
     </>
   );
-  if (external) {
-    return (
-      <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
-        {inner}
-      </a>
-    );
-  }
   return (
-    <Link href={href} className={className}>
-      {inner}
-    </Link>
+    <Magnetic>
+      {external ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+          {inner}
+        </a>
+      ) : (
+        <Link href={href} className={className}>
+          {inner}
+        </Link>
+      )}
+    </Magnetic>
   );
 }

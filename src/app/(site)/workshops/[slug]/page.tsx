@@ -6,6 +6,8 @@ import { ButtonLink } from "@/components/site/ButtonLink";
 import { Reveal } from "@/components/site/Reveal";
 import { SampleTag } from "@/components/site/SampleTag";
 import { SmartImage } from "@/components/site/SmartImage";
+import { Countdown } from "@/components/site/fx/Countdown";
+import { Gallery } from "@/components/site/fx/Gallery";
 import { getWorkshop } from "@/lib/data";
 import { formatDate } from "@/lib/format";
 
@@ -48,6 +50,12 @@ export default async function WorkshopPage({ params }: Params) {
             <h1 className="heading text-4xl sm:text-5xl lg:text-6xl">{w.title}</h1>
             {w.summary && <p className="mt-5 text-lg text-canvas/70">{w.summary}</p>}
             {w.details && <p className="mt-8 whitespace-pre-line leading-relaxed text-canvas/85">{w.details}</p>}
+            {(w.gallery ?? []).length > 0 && (
+              <div className="mt-10">
+                <p className="mono-label mb-4 text-lime">// photos from the session</p>
+                <Gallery images={w.gallery} title={w.title} />
+              </div>
+            )}
             {w.topics.length > 0 && (
               <div className="mt-8">
                 <p className="mono-label mb-3 text-canvas/60">topics covered</p>
@@ -77,6 +85,12 @@ export default async function WorkshopPage({ params }: Params) {
                   </div>
                 ))}
               </dl>
+            )}
+            {w.event_date && w.event_date.slice(0, 10) >= new Date().toISOString().slice(0, 10) && (
+              <div className="glass p-5">
+                <p className="mono-label mb-3 text-lime">starts in</p>
+                <Countdown date={w.event_date} />
+              </div>
             )}
             {w.register_url ? (
               <ButtonLink href={w.register_url} external>

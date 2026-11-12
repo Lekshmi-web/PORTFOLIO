@@ -4,6 +4,7 @@ import type { ExploreCategory } from "@/lib/types";
 import { Reveal } from "../Reveal";
 import { SectionHeading } from "../SectionHeading";
 import { SmartImage } from "../SmartImage";
+import { TiltCard } from "../fx/TiltCard";
 
 /** Bento layout: alternating wide/narrow tiles so it never reads as a uniform grid. */
 const spans = ["lg:col-span-7", "lg:col-span-5", "lg:col-span-5", "lg:col-span-7"];
@@ -28,9 +29,11 @@ export function Explore({ categories }: { categories: ExploreCategory[] }) {
         <ul className="grid gap-4 md:grid-cols-2 lg:grid-cols-12">
           {categories.map((c, i) => (
             <Reveal as="li" key={c.id} delay={i * 0.08} className={spans[i % spans.length]}>
+              <TiltCard className="h-full">
               <Link
                 href={c.href}
-                className="group relative flex h-[300px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-night p-6 transition-all duration-500 hover:border-lime/50 hover:shadow-[0_0_60px_-20px_rgba(216,241,107,0.45)] md:h-[360px] md:p-8"
+                data-cursor="open"
+                className="group spotlight relative flex h-[300px] flex-col justify-end overflow-hidden rounded-3xl border border-white/10 bg-night p-6 transition-all duration-500 hover:border-lime/50 hover:shadow-[0_0_60px_-20px_rgba(216,241,107,0.45)] md:h-[360px] md:p-8"
               >
                 {c.image_url && (
                   <SmartImage
@@ -55,11 +58,12 @@ export function Explore({ categories }: { categories: ExploreCategory[] }) {
                   <ArrowUpRight className="size-5" />
                 </span>
 
-                <div className="relative">
+                <div className="relative [transform:translateZ(40px)]">
                   <h3 className="heading text-2xl md:text-3xl">{c.title}</h3>
                   {c.description && <p className="mt-2 max-w-md text-sm text-canvas/75 md:text-base">{c.description}</p>}
                 </div>
               </Link>
+              </TiltCard>
             </Reveal>
           ))}
         </ul>

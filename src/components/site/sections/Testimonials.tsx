@@ -26,7 +26,7 @@ export function Testimonials({ testimonials, showHeading = true }: { testimonial
         <ul className="columns-1 gap-4 md:columns-2 lg:columns-3 [&>li]:mb-4">
           {testimonials.map((t, i) => (
             <Reveal as="li" key={t.id} delay={(i % 3) * 0.08} className="break-inside-avoid">
-              <figure className={`glass glass-hover p-6 ${i === 0 ? "border-lime/30" : ""}`}>
+              <figure className={`spotlight glass glass-hover p-6 ${i === 0 ? "border-lime/30" : ""}`}>
                 <span aria-hidden className="accent-serif block text-5xl leading-none text-pink">
                   &ldquo;
                 </span>

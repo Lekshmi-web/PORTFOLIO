@@ -38,6 +38,8 @@ export const sampleSettings: SiteSettings = {
   instagram_url: null,
   resume_url: null,
   skills: [],
+  stats: [],
+  status_text: null,
 };
 
 export const sampleCategories: ExploreCategory[] = [
@@ -73,7 +75,7 @@ const project = (
 ): Project => ({
   id: `proj-${i}`, slug, title, summary, problem: null, role: null, outcome: null, tech,
   image_url: `/samples/project-${i}.svg`, live_url: null,
-  repo_url: `https://github.com/Lekshmi-web/${repo}`,
+  repo_url: `https://github.com/Lekshmi-web/${repo}`, gallery: [],
   sort_order: i, ...base, is_sample: false,
 });
 
@@ -91,21 +93,21 @@ export const sampleWorkshops: Workshop[] = [
     summary: "Sample workshop — replace in Admin → Workshops.",
     details: null, event_date: null, location: null, audience: "Engineering students",
     format: "Hands-on", topics: ["LLMs", "Prompting", "Building apps"],
-    image_url: "/samples/workshop-1.svg", register_url: null, sort_order: 1, ...base, is_sample: true,
+    image_url: "/samples/workshop-1.svg", register_url: null, gallery: [], sort_order: 1, ...base, is_sample: true,
   },
   {
     id: "ws-2", slug: "sample-python-for-ai", title: "Sample: Python for AI",
     summary: "Sample workshop — replace in Admin → Workshops.",
     details: null, event_date: null, location: null, audience: "Beginners",
     format: "Bootcamp", topics: ["Python", "Data", "ML basics"],
-    image_url: "/samples/workshop-2.svg", register_url: null, sort_order: 2, ...base, is_sample: true,
+    image_url: "/samples/workshop-2.svg", register_url: null, gallery: [], sort_order: 2, ...base, is_sample: true,
   },
   {
     id: "ws-3", slug: "sample-mentoring-circle", title: "Sample: Project Mentoring Circle",
     summary: "Sample programme — replace in Admin → Workshops.",
     details: null, event_date: null, location: null, audience: "Final-year students",
     format: "Mentoring", topics: ["Project guidance", "Career"],
-    image_url: "/samples/workshop-3.svg", register_url: null, sort_order: 3, ...base, is_sample: true,
+    image_url: "/samples/workshop-3.svg", register_url: null, gallery: [], sort_order: 3, ...base, is_sample: true,
   },
 ];
 

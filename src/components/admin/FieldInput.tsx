@@ -1,6 +1,7 @@
 "use client";
 
 import type { Field } from "@/lib/admin/collections";
+import { GalleryField } from "./GalleryField";
 import { ImageField } from "./ImageField";
 
 interface FieldInputProps {
@@ -35,6 +36,27 @@ export function FieldInput({ field, value, folder }: FieldInputProps) {
   switch (field.type) {
     case "textarea":
       control = <textarea id={id} name={field.name} defaultValue={str} rows={field.name.includes("long") || field.name === "details" ? 8 : 4} className="field" required={field.required} />;
+      break;
+    case "lines":
+      control = (
+        <textarea
+          id={id}
+          name={field.name}
+          defaultValue={Array.isArray(value) ? value.join("\n") : str}
+          rows={4}
+          className="field font-mono"
+          placeholder={"25+ Workshops run\n1000+ Students mentored"}
+        />
+      );
+      break;
+    case "gallery":
+      control = (
+        <GalleryField
+          name={field.name}
+          defaultValue={Array.isArray(value) ? value.filter((v): v is string => typeof v === "string") : []}
+          folder={folder}
+        />
+      );
       break;
     case "image":
       control = (
@@ -74,7 +96,7 @@ export function FieldInput({ field, value, folder }: FieldInputProps) {
 
   return (
     <div>
-      {field.type === "image" ? (
+      {field.type === "image" || field.type === "gallery" ? (
         <p className="label">{field.label}</p>
       ) : (
         <label htmlFor={id} className="label">

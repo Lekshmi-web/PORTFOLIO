@@ -123,6 +123,177 @@
   }
 }
 
+/* ───────── Interaction layers ───────── */
+
+/* Smooth scroll (Lenis) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Cursor spotlight: lime border glow + faint fill that follows the pointer (vars set by SpotlightTracker). */
+.spotlight {
+  position: relative;
+}
+.spotlight::before,
+.spotlight::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease-soft);
+  z-index: 1;
+}
+.spotlight::before {
+  padding: 1px;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgb(216 241 107 / 0.7), transparent 65%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.spotlight::after {
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(217 201 245 / 0.07), transparent 60%);
+}
+.spotlight:hover::before,
+.spotlight:hover::after {
+  opacity: 1;
+}
+
+/* Custom cursor hides the native one only where it's active. */
+html.custom-cursor,
+html.custom-cursor a,
+html.custom-cursor button,
+html.custom-cursor [role="button"] {
+  cursor: none;
+}
+
+/* Boot intro — fully CSS-driven so it also ends without JavaScript. */
+.boot {
+  animation: boot-out 0.6s var(--ease-soft) 1.9s forwards;
+}
+.boot-line {
+  opacity: 0;
+  animation: boot-line 0.01s steps(1) forwards;
+}
+.boot-bar {
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: boot-bar 1.6s var(--ease-soft) 0.2s forwards;
+}
+html[data-booted] .boot,
+.boot[data-skip] {
+  display: none;
+}
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+@keyframes boot-line {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes boot-bar {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Holographic shimmer for the headline achievement. */
+.holo {
+  position: relative;
+  overflow: hidden;
+}
+.holo > .holo-sheen {
+  position: absolute;
+  inset: -50%;
+  background: linear-gradient(
+    115deg,
+    transparent 35%,
+    rgb(216 241 107 / 0.18) 45%,
+    rgb(255 110 145 / 0.18) 50%,
+    rgb(217 201 245 / 0.18) 55%,
+    transparent 65%
+  );
+  animation: holo 5s var(--ease-soft) infinite;
+  pointer-events: none;
+}
+@keyframes holo {
+  0% {
+    transform: translateX(-40%);
+  }
+  60%,
+  100% {
+    transform: translateX(40%);
+  }
+}
+
+/* Glitch text (404 and section accents). Uses data-text for the offset copies. */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  opacity: 0.8;
+}
+.glitch::before {
+  color: var(--color-pink);
+  animation: glitch-a 2.4s steps(2) infinite;
+  clip-path: inset(10% 0 60% 0);
+}
+.glitch::after {
+  color: var(--color-lime);
+  animation: glitch-b 3.1s steps(2) infinite;
+  clip-path: inset(55% 0 15% 0);
+}
+@keyframes glitch-a {
+  0%, 85%, 100% { transform: translate(0); }
+  88% { transform: translate(-4px, 1px); }
+  92% { transform: translate(3px, -2px); }
+}
+@keyframes glitch-b {
+  0%, 80%, 100% { transform: translate(0); }
+  84% { transform: translate(4px, 2px); }
+  90% { transform: translate(-3px, -1px); }
+}
+
+/* Orbit for the skills constellation. */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+/* Hovering the constellation pauses it so a skill can be read. */
+.orbit-wrap:hover .orbit-anim {
+  animation-play-state: paused !important;
+}
+@keyframes counter-orbit {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 /* ───────── Motion ───────── */
 @keyframes marquee {
   from { transform: translateX(0); }
@@ -149,6 +320,11 @@
 }
 
 .animate-marquee { animation: marquee 45s linear infinite; }
+.animate-marquee-reverse { animation: marquee 50s linear infinite reverse; }
+.pause-on-hover:hover .animate-marquee,
+.pause-on-hover:hover .animate-marquee-reverse,
+.pause-on-hover:focus-within .animate-marquee,
+.pause-on-hover:focus-within .animate-marquee-reverse { animation-play-state: paused; }
 .animate-spin-slow { animation: spin-slow 8s linear infinite; }
 .animate-scan { animation: scan 4.5s var(--ease-soft) infinite; }
 .animate-blink { animation: blink 1s step-end infinite; }
@@ -156,6 +332,12 @@
 .animate-float { animation: float 6s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
+  .boot,
+  .glitch::before,
+  .glitch::after,
+  .holo > .holo-sheen {
+    display: none;
+  }
   *,
   *::before,
   *::after {

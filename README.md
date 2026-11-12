@@ -29,14 +29,15 @@ Open http://localhost:3000. You'll see the full site with sample content.
 
 1. Go to [supabase.com](https://supabase.com) → **New project** (free plan is fine). Save the database password somewhere safe.
 2. **SQL Editor → New query** → paste all of `supabase/migrations/0001_init.sql` → **Run**.
-3. New query → paste all of `supabase/seed.sql` → **Run**. (Adds your brand text, 4 categories, your 4 GitHub projects, your First Rank achievement, and samples.)
-4. **Project Settings → API**: copy the **Project URL** and the **anon public** key.
-5. In the project folder, copy `.env.example` to `.env.local` and paste them in:
+3. New query → paste all of `supabase/migrations/0002_engagement.sql` → **Run**. (Adds counters, live status and photo galleries.)
+4. New query → paste all of `supabase/seed.sql` → **Run**. (Adds your brand text, 4 categories, your 4 GitHub projects, your First Rank achievement, and samples.)
+5. **Project Settings → API**: copy the **Project URL** and the **anon public** key.
+6. In the project folder, copy `.env.example` to `.env.local` and paste them in:
    ```
    NEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co
    NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...
    ```
-6. Stop and restart `npm run dev`.
+7. Stop and restart `npm run dev`.
 
 ### Create your admin login
 1. Supabase → **Authentication → Users → Add user → Create new user**. Enter your email and a strong password, tick **Auto confirm**.
@@ -72,13 +73,15 @@ git push -u origin main
 
 ---
 
+> **Already set up Supabase before this update?** Just run `supabase/migrations/0002_engagement.sql` once in the SQL Editor. It only adds new fields.
+
 ## Using the admin panel
 
 | Section | What you edit |
 |---|---|
-| Site settings | Portrait, name, roles, hero headline & intro, bio, skills, résumé PDF, email & social links |
+| Site settings | Portrait, name, roles, hero headline & intro, **live status**, **counters**, bio, skills, résumé PDF, email & social links |
 | Explore categories | The 4 "Explore My World" items: title, text, image, link, order |
-| Projects / Workshops / Resources / Content / Achievements / Testimonials | Add, edit, delete, reorder, hide |
+| Projects / Workshops / Resources / Content / Achievements / Testimonials | Add, edit, delete, reorder, hide. Projects and workshops also have a **photo gallery** |
 | Messages | Contact-form messages |
 
 Each item has:
@@ -86,6 +89,14 @@ Each item has:
 - **Published** — visible on the site at all
 - **Order** — lower numbers first
 - **This is sample content** — untick once it's real
+
+### Interactive features (no setup needed)
+- **Ctrl/⌘ + K** opens quick search on any page.
+- **Counters** on the homepage appear once you add lines like `25+ Workshops run` in Site settings → Counters.
+- **Live status** (e.g. "running a GenAI workshop this week") replaces the hero badge text.
+- **YouTube links** in Content play in an in-page player automatically.
+- **Workshops with a future date** get a live countdown and an "Upcoming" badge.
+- Visitors with "reduce motion" switched on get a calm version without the intro, cursor and moving effects.
 
 ### Before launch checklist
 - [ ] Portrait + 4 category photos uploaded (real photos only)

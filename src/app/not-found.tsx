@@ -9,7 +9,9 @@ export default function NotFound() {
       </div>
       <p className="font-mono text-sm text-lime">// error 404</p>
       <p className="heading mt-3 text-[clamp(4rem,14vw,9rem)]">
-        <span className="gradient-text">404</span>
+        <span className="glitch text-lime" data-text="404">
+          404
+        </span>
       </p>
       <p className="mt-2 text-lg text-canvas/70">This page wandered off the network.</p>
       <Link

@@ -30,7 +30,7 @@ export function WorkshopsStrip({ workshops }: { workshops: Workshop[] }) {
       >
         {workshops.map((w, i) => (
           <li key={w.id} className="w-[80vw] max-w-[380px] shrink-0 snap-start">
-            <Link href={`/workshops/${w.slug}`} className="group glass glass-hover block overflow-hidden">
+            <Link href={`/workshops/${w.slug}`} data-cursor="view" className="group spotlight glass glass-hover block overflow-hidden">
               <div className="relative aspect-[16/10] overflow-hidden bg-void">
                 {w.image_url && (
                   <SmartImage

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ContactForm } from "@/components/site/ContactForm";
 import { Reveal } from "@/components/site/Reveal";
 import { SocialLinks } from "@/components/site/SocialLinks";
+import { CopyButton } from "@/components/site/fx/CopyButton";
 import { getSettings } from "@/lib/data";
 
 export const metadata: Metadata = {
@@ -30,9 +31,12 @@ export default async function ContactPage() {
             reply as soon as I can.
           </p>
           {s.email && (
-            <a href={`mailto:${s.email}`} className="link-underline mt-8 inline-block font-mono text-lg text-lime">
-              {s.email}
-            </a>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href={`mailto:${s.email}`} className="link-underline font-mono text-lg text-lime">
+                {s.email}
+              </a>
+              <CopyButton value={s.email} label="Copy email" showLabel />
+            </div>
           )}
           <SocialLinks settings={s} className="mt-7 text-canvas" />
         </Reveal>

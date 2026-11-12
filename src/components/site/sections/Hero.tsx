@@ -34,7 +34,7 @@ export function Hero({ settings }: { settings: SiteSettings }) {
           <Reveal>
             <p className="chip mb-8 gap-2.5 py-1.5">
               <span className="relative inline-flex size-2 rounded-full bg-lime animate-pulse-dot" aria-hidden />
-              system online · {settings.roles[0]?.toLowerCase() ?? "ai engineer"}
+              {settings.status_text ? `currently: ${settings.status_text}` : `system online · ${settings.roles[0]?.toLowerCase() ?? "ai engineer"}`}
             </p>
           </Reveal>
 
