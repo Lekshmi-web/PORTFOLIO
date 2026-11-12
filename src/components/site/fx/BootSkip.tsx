@@ -5,12 +5,18 @@ import { useEffect } from "react";
 /** Remembers the boot intro for this session and lets visitors skip it. */
 export function BootSkip({ storageKey }: { storageKey: string }) {
   useEffect(() => {
+    const boot = document.getElementById("boot");
     try {
+      // Already seen this session (e.g. arrived here from /admin by client navigation): hide at once.
+      if (sessionStorage.getItem(storageKey)) {
+        boot?.setAttribute("data-skip", "1");
+        document.documentElement.setAttribute("data-booted", "1");
+        return;
+      }
       sessionStorage.setItem(storageKey, "1");
     } catch {
       // Storage blocked — the intro just plays again next time.
     }
-    const boot = document.getElementById("boot");
     const skip = () => boot?.setAttribute("data-skip", "1");
     window.addEventListener("keydown", skip, { once: true });
     boot?.addEventListener("pointerdown", skip, { once: true });

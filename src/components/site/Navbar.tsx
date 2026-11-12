@@ -124,6 +124,7 @@ export function Navbar({ name }: { name: string }) {
       <div
         id="mobile-menu"
         hidden={!open}
+        data-lenis-prevent
         className="fixed inset-0 z-40 overflow-y-auto bg-void/95 px-6 pb-10 pt-24 backdrop-blur-xl lg:hidden"
       >
         <ul>

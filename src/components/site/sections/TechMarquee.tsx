@@ -2,7 +2,7 @@
 export function TechMarquee({ items }: { items: string[] }) {
   if (items.length < 3) return null;
   // Repeat so one copy is always wider than the screen, then duplicate for a seamless loop.
-  const base = Array.from({ length: Math.ceil(12 / items.length) }).flatMap(() => items);
+  const base = Array.from({ length: Math.ceil(24 / items.length) }).flatMap(() => items);
   const row = [...base, ...base];
 
   return (

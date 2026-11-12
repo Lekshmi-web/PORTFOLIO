@@ -14,8 +14,8 @@ export default function SiteTemplate({ children }: { children: React.ReactNode }
         transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       />
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ y: 14 }}
+        animate={{ y: 0 }}
         transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}

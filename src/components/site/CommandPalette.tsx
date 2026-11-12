@@ -61,6 +61,11 @@ export function CommandPalette({ items }: { items: PaletteItem[] }) {
     if (open) requestAnimationFrame(() => inputRef.current?.focus());
   }, [open]);
 
+  // Keep the highlighted result visible while arrowing through a long list.
+  useEffect(() => {
+    if (open) document.getElementById(`${listId}-${active}`)?.scrollIntoView({ block: "nearest" });
+  }, [active, open, listId]);
+
   function go(item: PaletteItem | undefined) {
     if (!item) return;
     setOpen(false);
@@ -71,7 +76,7 @@ export function CommandPalette({ items }: { items: PaletteItem[] }) {
   function onInputKey(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setActive((a) => Math.min(a + 1, results.length - 1));
+      setActive((a) => Math.min(a + 1, Math.max(results.length - 1, 0)));
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
       setActive((a) => Math.max(a - 1, 0));

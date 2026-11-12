@@ -77,10 +77,20 @@ function parseFields(fields: Field[], formData: FormData): { values: Record<stri
   return { values };
 }
 
+const ROUND2_FIELDS = ["gallery", "stats", "status_text"];
+
+function isMissingColumn(message: string): boolean {
+  return /column .* does not exist|Could not find the '.*' column/i.test(message);
+}
+
+function withoutRound2Fields(values: Record<string, unknown>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(values).filter(([k]) => !ROUND2_FIELDS.includes(k)));
+}
+
 /** Turns raw database errors into something actionable. */
 function friendlyDbError(message: string): string {
   if (message.includes("duplicate key")) return "That URL slug is already used — choose another.";
-  if (/column .* does not exist|Could not find the '.*' column/i.test(message)) {
+  if (isMissingColumn(message)) {
     return "Your database is missing new fields. In Supabase → SQL Editor, run supabase/migrations/0002_engagement.sql, then save again.";
   }
   return message;
@@ -105,9 +115,12 @@ export async function saveItem(
   const { values, error } = parseFields(config.fields, formData);
   if (error) return { error };
 
-  const result = id
-    ? await supabase.from(config.key).update(values).eq("id", id)
-    : await supabase.from(config.key).insert(values);
+  const write = (v: Record<string, unknown>) =>
+    id ? supabase.from(config.key).update(v).eq("id", id) : supabase.from(config.key).insert(v);
+
+  let result = await write(values);
+  // Database not upgraded yet (migration 0002)? Save everything else instead of failing.
+  if (result.error && isMissingColumn(result.error.message)) result = await write(withoutRound2Fields(values));
 
   if (result.error) return { error: friendlyDbError(result.error.message) };
   refreshSite();
@@ -139,7 +152,14 @@ export async function saveSettings(_prev: FormState, formData: FormData): Promis
   const supabase = await requireAdmin();
   const { values, error } = parseFields(settingsFields, formData);
   if (error) return { error };
-  const { error: dbError } = await supabase.from("site_settings").upsert({ id: 1, ...values });
+  let { error: dbError } = await supabase.from("site_settings").upsert({ id: 1, ...values });
+  if (dbError && isMissingColumn(dbError.message)) {
+    ({ error: dbError } = await supabase.from("site_settings").upsert({ id: 1, ...withoutRound2Fields(values) }));
+    if (!dbError) {
+      refreshSite();
+      return { error: "Saved — except Counters and Live status. To use those, run supabase/migrations/0002_engagement.sql in Supabase." };
+    }
+  }
   if (dbError) return { error: friendlyDbError(dbError.message) };
   refreshSite();
   return { ok: true };

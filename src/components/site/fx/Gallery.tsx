@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { SmartImage } from "../SmartImage";
+import { Portal } from "./Portal";
 
 /** Thumbnail grid that opens a fullscreen viewer (arrow keys, Esc, swipe-free buttons). */
 export function Gallery({ images, title }: { images: string[]; title: string }) {
@@ -20,23 +21,30 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
     [images.length],
   );
 
+  const isOpen = index !== null;
+
+  // Scroll lock + initial focus: only when opening/closing, not on every image change.
   useEffect(() => {
-    if (index === null) return;
+    if (!isOpen) return;
     window.dispatchEvent(new Event("lenis:stop"));
     document.body.style.overflow = "hidden";
-    closeRef.current?.focus();
+    requestAnimationFrame(() => closeRef.current?.focus());
+    return () => {
+      document.body.style.overflow = "";
+      window.dispatchEvent(new Event("lenis:start"));
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
       else if (e.key === "ArrowRight") step(1);
       else if (e.key === "ArrowLeft") step(-1);
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-      window.dispatchEvent(new Event("lenis:start"));
-    };
-  }, [index, close, step]);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isOpen, close, step]);
 
   if (!images.length) return null;
 
@@ -67,13 +75,14 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
         ))}
       </ul>
 
-      <AnimatePresence>
+      <Portal>
+<AnimatePresence>
         {index !== null && (
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-label={`${title} — image ${index + 1} of ${images.length}`}
-            className="fixed inset-0 z-[85] flex items-center justify-center bg-void/95 p-4 backdrop-blur-md md:p-10"
+            className="fixed inset-0 z-[85] flex items-center justify-center bg-void/95 p-4 text-canvas backdrop-blur-md md:p-10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -129,6 +138,7 @@ export function Gallery({ images, title }: { images: string[]; title: string }) 
           </motion.div>
         )}
       </AnimatePresence>
+</Portal>
     </>
   );
 }

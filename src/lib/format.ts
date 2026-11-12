@@ -21,10 +21,10 @@ export interface Stat {
 
 /** "25+ Workshops run" → { value: 25, suffix: "+", label: "Workshops run" }. Returns null if no leading number. */
 export function parseStat(line: string): Stat | null {
-  const m = line.trim().match(/^(\d+(?:\.\d+)?)(\S*)\s+(.+)$/);
+  const m = line.trim().match(/^(\d[\d,]*(?:\.\d+)?)(\S*)\s+(.+)$/);
   if (!m) return null;
   return {
-    value: Number.parseFloat(m[1]),
+    value: Number.parseFloat(m[1].replace(/,/g, "")),
     suffix: m[2],
     label: m[3],
     decimals: m[1].includes(".") ? m[1].split(".")[1].length : 0,

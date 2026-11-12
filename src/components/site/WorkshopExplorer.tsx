@@ -16,9 +16,8 @@ function isUpcoming(w: Workshop, today: string) {
 }
 
 /** All / Upcoming / Past tabs with a sliding indicator and animated list. */
-export function WorkshopExplorer({ workshops }: { workshops: Workshop[] }) {
+export function WorkshopExplorer({ workshops, today }: { workshops: Workshop[]; today: string }) {
   const [tab, setTab] = useState<Tab>("all");
-  const today = new Date().toISOString().slice(0, 10);
   const dated = workshops.some((w) => w.event_date);
 
   const shown = workshops.filter((w) =>
@@ -56,7 +55,8 @@ export function WorkshopExplorer({ workshops }: { workshops: Workshop[] }) {
         </div>
       )}
 
-      <ul className="space-y-4" role={dated ? "tabpanel" : undefined}>
+      <div role={dated ? "tabpanel" : undefined}>
+      <ul className="relative space-y-4">
         <AnimatePresence mode="popLayout" initial={false}>
           {shown.length === 0 && (
             <motion.li key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="glass p-8 text-center font-mono text-sm text-canvas/65">
@@ -105,6 +105,7 @@ export function WorkshopExplorer({ workshops }: { workshops: Workshop[] }) {
           ))}
         </AnimatePresence>
       </ul>
+      </div>
     </>
   );
 }

@@ -84,15 +84,12 @@ export default async function AboutPage() {
             <h2 id="roles-title" className="heading text-3xl md:text-4xl">
               {s.core_message ?? "I build AI. I teach technology. I inspire people to create."}
             </h2>
-            <p className="mt-4 font-mono text-xs text-canvas/60">hover a role ↘</p>
+            <p className="mt-4 hidden font-mono text-xs text-canvas/60 [@media(pointer:fine)]:block">hover a role ↘</p>
           </Reveal>
           <ul>
             {s.roles.map((r, i) => (
               <Reveal as="li" key={r} delay={i * 0.06}>
-                <div
-                  tabIndex={0}
-                  className="group flex items-baseline gap-4 border-b border-white/10 py-3.5 outline-none transition-colors hover:border-lime/40 focus-visible:border-lime"
-                >
+                <div className="group flex items-baseline gap-4 border-b border-white/10 py-3.5 transition-colors hover:border-lime/40">
                   <span className="font-mono text-xs text-lime">{String(i + 1).padStart(2, "0")}</span>
                   <ScrambleText text={r} className="heading text-2xl transition-colors group-hover:text-lime" />
                   <span aria-hidden className="ml-auto font-mono text-xs text-canvas/0 transition-colors group-hover:text-lime">

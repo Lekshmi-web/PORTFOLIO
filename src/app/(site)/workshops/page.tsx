@@ -54,7 +54,7 @@ export default async function WorkshopsPage() {
             </div>
           </Reveal>
         )}
-        {workshops.length === 0 ? <EmptyState text="New workshops coming soon." /> : <WorkshopExplorer workshops={workshops} />}
+        {workshops.length === 0 ? <EmptyState text="New workshops coming soon." /> : <WorkshopExplorer workshops={workshops} today={today} />}
       </section>
     </>
   );

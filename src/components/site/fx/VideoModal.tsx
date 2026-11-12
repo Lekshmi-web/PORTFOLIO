@@ -3,6 +3,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
+import { Portal } from "./Portal";
 
 /** In-page YouTube player (privacy-enhanced domain). Esc or backdrop click closes. */
 export function VideoModal({ videoId, title, onClose }: { videoId: string | null; title: string; onClose: () => void }) {
@@ -25,13 +26,14 @@ export function VideoModal({ videoId, title, onClose }: { videoId: string | null
   }, [videoId, onClose]);
 
   return (
-    <AnimatePresence>
+    <Portal>
+<AnimatePresence>
       {videoId && (
         <motion.div
           role="dialog"
           aria-modal="true"
           aria-label={title}
-          className="fixed inset-0 z-[85] flex items-center justify-center bg-void/90 p-4 backdrop-blur-md"
+          className="fixed inset-0 z-[85] flex items-center justify-center bg-void/90 p-4 text-canvas backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -68,5 +70,6 @@ export function VideoModal({ videoId, title, onClose }: { videoId: string | null
         </motion.div>
       )}
     </AnimatePresence>
+</Portal>
   );
 }
